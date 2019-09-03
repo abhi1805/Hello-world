@@ -1,2 +1,8 @@
-# hello-world
-import sys
+---
+- name: Hello World!
+  hosts: localhost
+
+  tasks:
+
+  - name: Hello World!
+    shell: echo "Hi! Tower is working!"
