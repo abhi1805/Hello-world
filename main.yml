@@ -1,0 +1,19 @@
+---
+- name: Get device uptime
+  hosts: all
+  roles:
+    - Juniper.junos
+  connection: netconf
+  gather_facts: no
+
+  tasks:
+  - name: get uptime using galaxy module
+    juniper_junos_command:
+      commands:
+        - show interfaces terse
+#      provider:        
+#        user: "root"
+#        passwd: "Agaw@bh1"
+    register: variable
+  - debug:
+      var: variable
