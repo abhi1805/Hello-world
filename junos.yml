@@ -1,4 +1,4 @@
---
+---
 - name: Get device uptime
   hosts: all
   roles:
