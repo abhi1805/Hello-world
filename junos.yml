@@ -1,14 +1,14 @@
 ---
 - name: Get device uptime
   hosts: all
-  roles:
-    - Juniper.junos
+#  roles:
+#    - Juniper.junos
   connection: netconf
   gather_facts: no
 
   tasks:
   - name: get uptime using galaxy module
-    juniper_junos_command:
+    junos_command:
       commands:
         - show interfaces terse
 #      provider:
