@@ -1,9 +1,9 @@
 ---
 - hosts: all
   connection: local
-  become: false
+  become: yes
   gather_facts: yes
-  
+
   tasks:
     - name: Check if splunk already installed.
       yum:
@@ -11,33 +11,32 @@
         state: present
       register: splunk_installed_result
       ignore_errors: yes
-    
+
     - name: Ping server
       ping:
-      
+
     - name: Check splunks status:
       command: "$SPLUNK_HOME/bin/splunk status"
       register: splunk_running
       ignore_errors: yes
-      
+
     - name: Stop Splunk
       command: "$SPLUNK_HOME/bin/splunk stop"
       register: splunk_stop
       ignore_errors: yes
-    
+
     - name: Install Splunk
-      command: "rpm -i 
+      command: "rpm -i splunk-8.0.0-1357bef0a7f6-linux-2.6-x86_64.rpm"
       register: splunk_installed
-      
+
     - name: Start SPlunk
-      command: "$SPLUNK_HOME/bin/./splunk start --accept-license --answer-yes
+      command: "$SPLUNK_HOME/bin/./splunk start --accept-license --answer-yes"
       register: splunk_start
       ignore_errors: yes
-      
-     - name: Check Splunk version
-      command: "$SPLUNK_HOME/bin/splunk -version
+
+    - name: Check Splunk version
+      command: "$SPLUNK_HOME/bin/splunk -version"
       register: splunk_ver
       ignore_errors: yes
-           
-      
-      
+    - debug:
+        msg: "{{ splunk_ver.stdout }}" 
