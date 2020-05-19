@@ -1,0 +1,43 @@
+---
+- hosts: all
+  connection: local
+  become: false
+  gather_facts: yes
+  
+  tasks:
+    - name: Check if splunk already installed.
+      yum:
+        name: splunk
+        state: present
+      register: splunk_installed_result
+      ignore_errors: yes
+    
+    - name: Ping server
+      ping:
+      
+    - name: Check splunks status:
+      command: "$SPLUNK_HOME/bin/splunk status"
+      register: splunk_running
+      ignore_errors: yes
+      
+    - name: Stop Splunk
+      command: "$SPLUNK_HOME/bin/splunk stop"
+      register: splunk_stop
+      ignore_errors: yes
+    
+    - name: Install Splunk
+      command: "rpm -i 
+      register: splunk_installed
+      
+    - name: Start SPlunk
+      command: "$SPLUNK_HOME/bin/./splunk start --accept-license --answer-yes
+      register: splunk_start
+      ignore_errors: yes
+      
+     - name: Check Splunk version
+      command: "$SPLUNK_HOME/bin/splunk -version
+      register: splunk_ver
+      ignore_errors: yes
+           
+      
+      
